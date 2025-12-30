@@ -5,7 +5,7 @@
 
 ### Purpose
 
-The Invoice Volume Dashboard provides visibility into hauler invoice processing patterns to support month-end close operations and identify anomalies that may indicate billing issues, contract changes, or data routing problems.
+The Invoice Volume Dashboard provides visibility into the daily inbound invoice count. The dashboard shows daily volume against average daily average, monthly volume by hauler, and surfaces the haulers who demonstrate a 25% drop in volume month over month. 
 
 ---
 
@@ -23,14 +23,13 @@ This table contains incoming invoices from haulers, parsed by Google Document AI
 
 ### Vendor Matching
 
-**The Problem:**
 Hauler vendor names arrive in inconsistent formats from Document AI parsing. For example, "Republic Services" may appear as:
 - `REPUBLIC SERVICES`
 - `REPUBLIC\nSERVICES`
 - `Republic Services Inc.`
 - `REPUBLIC`
 
-**The Solution:**
+**Solution:**
 A two-stage fuzzy matching algorithm normalizes messy vendor names to our canonical vendor list from `vw_flat_services`:
 
 1. **Direct Match:** Invoice vendor name matched against clean vendor list using multiple techniques (exact match, fuzzy match, substring match)
@@ -64,7 +63,7 @@ Alerts flag vendors where invoice volume changed significantly between the two m
 
 | Alert Type | Possible Causes |
 |------------|-----------------|
-| **Volume Drop** | Contract ended, billing address changed, invoices routing to wrong location, service discontinued |
+| **Volume Drop** | site closures, invoice scraping or routing issues.
 | **Volume Spike** | Duplicate invoices, billing errors, new service locations, catch-up billing |
 
 ---
