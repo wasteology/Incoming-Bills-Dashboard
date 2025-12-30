@@ -6,7 +6,7 @@
 
 ### Purpose
 
-The Invoice Volume Dashboard provides visibility into the daily inbound invoice count. The dashboard shows daily volume against average daily average, monthly volume by hauler, and surfaces the haulers who demonstrate a 25% drop in volume month over month. 
+The Invoice Volume Dashboard simply provides visibility into the daily inbound invoice count (# of dailiy invoices parsed through GCP, today -1). The dashboard shows daily volume against average daily average, monthly volume by hauler, and surfaces the haulers who demonstrate a 25% drop in volume month over month. 
 
 ---
 
