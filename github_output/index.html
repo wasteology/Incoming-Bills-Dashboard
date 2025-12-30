@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Volume Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', -apple-system, sans-serif; 
+      background: linear-gradient(180deg, #1a1f2e 0%, #151922 100%); 
+      color: #e2e8f0; 
+      min-height: 100vh; 
+    }
+    .container { padding: 24px; max-width: 1400px; margin: 0 auto; }
+    
+    /* Header */
+    .header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #2d3748; }
+    .logo { width: 48px; height: 48px; border-radius: 10px; object-fit: contain; }
+    .title { font-size: 20px; font-weight: 600; color: #4A9B52; letter-spacing: 2px; text-transform: uppercase; }
+    .subtitle { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+    /* KPI Cards */
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .kpi-card { background: linear-gradient(145deg, #1e2433 0%, #171c28 100%); border: 1px solid #2d3748; border-radius: 12px; padding: 20px; transition: transform 0.2s, box-shadow 0.2s; }
+    .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .kpi-label { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 500; }
+    .kpi-value { font-size: 32px; font-weight: 700; color: #4A9B52; line-height: 1; }
+    .kpi-value.alert { color: #f59e0b; }
+    .kpi-sub { font-size: 11px; color: #64748b; margin-top: 8px; }
+
+    /* Tabs */
+    .tab-row { display: flex; gap: 8px; margin-bottom: 20px; }
+    .tab { 
+      padding: 10px 20px; 
+      font-size: 12px; 
+      font-weight: 600; 
+      text-transform: uppercase; 
+      letter-spacing: 1px; 
+      border: none; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-family: inherit; 
+      background: #1e2433; 
+      color: #64748b; 
+      border: 1px solid #2d3748;
+      transition: all 0.2s;
+    }
+    .tab:hover { background: #252d3d; color: #94a3b8; }
+    .tab.active { background: linear-gradient(135deg, #4A9B52 0%, #357A3D 100%); color: #fff; border-color: transparent; box-shadow: 0 4px 12px rgba(74, 155, 82, 0.3); }
+
+    /* Panels */
+    .panel { background: linear-gradient(145deg, #1e2433 0%, #171c28 100%); border: 1px solid #2d3748; border-radius: 12px; padding: 24px; display: none; }
+    .panel.active { display: block; }
+    .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .panel-title { font-size: 14px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
+    .panel-title-icon { width: 14px; height: 14px; background: #4A9B52; border-radius: 3px; }
+
+    /* Chart Container */
+    .chart-container { height: 320px; margin-bottom: 20px; position: relative; }
+
+    /* Info & Alert Boxes */
+    .info-box { margin-top: 20px; padding: 14px 18px; background: rgba(74, 155, 82, 0.08); border: 1px solid rgba(74, 155, 82, 0.2); border-radius: 8px; font-size: 12px; color: #4A9B52; }
+    .alert-box { margin-top: 20px; padding: 14px 18px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 8px; font-size: 12px; color: #f59e0b; display: flex; align-items: flex-start; gap: 10px; }
+    .alert-box-icon { font-size: 16px; }
+
+    /* Stat Grid */
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+    .stat-box { background: #151922; border: 1px solid #2d3748; border-radius: 8px; padding: 16px; }
+    .stat-label { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; }
+    .stat-value { font-size: 20px; font-weight: 700; color: #4A9B52; margin-top: 6px; }
+
+    /* Select/Dropdown */
+    .toolbar { display: flex; align-items: center; gap: 12px; }
+    .select { 
+      background: #151922; 
+      border: 1px solid #2d3748; 
+      border-radius: 6px; 
+      padding: 8px 14px; 
+      font-size: 12px; 
+      color: #e2e8f0; 
+      cursor: pointer; 
+      min-width: 200px;
+      font-family: inherit;
+    }
+    .select:focus { outline: none; border-color: #4A9B52; }
+    .toolbar-label { font-size: 11px; color: #64748b; }
+
+    /* Legend */
+    .legend { font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 8px; }
+    .legend-line { width: 24px; height: 3px; background: #f59e0b; border-radius: 2px; }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { text-align: left; padding: 12px 16px; color: #64748b; font-weight: 500; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px; border-bottom: 1px solid #2d3748; background: #151922; }
+    th.right { text-align: right; }
+    td { padding: 14px 16px; border-bottom: 1px solid #1e2433; color: #e2e8f0; }
+    td.right { text-align: right; }
+    td.muted { color: #94a3b8; }
+    td.red { color: #ef4444; font-weight: 600; }
+    td.green { color: #22c55e; font-weight: 600; }
+    tr:hover { background: rgba(74, 155, 82, 0.05); }
+
+    /* Badges */
+    .badge { 
+      display: inline-block; 
+      padding: 4px 10px; 
+      border-radius: 6px; 
+      font-size: 10px; 
+      font-weight: 600; 
+      text-transform: uppercase; 
+      letter-spacing: 0.5px;
+    }
+    .badge-red { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-green { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+
+    /* Empty State */
+    .empty-state { text-align: center; padding: 60px 20px; color: #64748b; }
+    .empty-icon { font-size: 48px; margin-bottom: 16px; color: #4A9B52; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="logo.png" alt="Wasteology" class="logo">
+      <div>
+        <div class="title">Invoice Volume</div>
+        <div class="subtitle">Invoice volume monitoring &bull; Data through <span id="data-date">--</span> &bull; Excludes Obsolete &amp; Duplicate status</div>
+      </div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">Yesterday</div>
+        <div class="kpi-value" id="kpi-yesterday">--</div>
+        <div class="kpi-sub" id="kpi-yesterday-date">--</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label" id="kpi-mtd-label">MTD</div>
+        <div class="kpi-value" id="kpi-mtd">--</div>
+        <div class="kpi-sub" id="kpi-mtd-days">-- days</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Year to Date</div>
+        <div class="kpi-value" id="kpi-ytd">--</div>
+        <div class="kpi-sub">Jan - Nov 2025</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Alerts (Nov Close)</div>
+        <div class="kpi-value alert" id="kpi-alerts">--</div>
+        <div class="kpi-sub">volume changes &gt;25%</div>
+      </div>
+    </div>
+
+    <div class="tab-row">
+      <button class="tab active" data-tab="daily">Daily MTD</button>
+      <button class="tab" data-tab="monthly">Monthly Trend</button>
+      <button class="tab" data-tab="alerts" id="tab-alerts">Alerts (0)</button>
+    </div>
+
+    <div class="panel active" id="panel-daily">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span class="panel-title-icon"></span>
+          Daily Invoice Count
+        </div>
+        <div class="toolbar">
+          <span class="toolbar-label">Month:</span>
+          <select class="select" id="month-select"></select>
+          <div class="legend"><span class="legend-line"></span> <span id="daily-avg-label">Avg --/day</span></div>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="daily-chart"></canvas>
+      </div>
+      <div class="info-box">Weekend days shown at reduced opacity. Orange dashed line = YTD daily average.</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-label">MTD Total</div><div class="stat-value" id="stat-mtd-total">--</div></div>
+        <div class="stat-box"><div class="stat-label">YTD Daily Avg</div><div class="stat-value" id="stat-daily-avg">--</div></div>
+        <div class="stat-box"><div class="stat-label">Peak Day</div><div class="stat-value" id="stat-peak-day">--</div></div>
+        <div class="stat-box"><div class="stat-label">Peak Volume</div><div class="stat-value" id="stat-peak-volume">--</div></div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-monthly">
+      <div class="panel-header" style="justify-content: center;">
+        <div class="toolbar">
+          <span class="toolbar-label">Vendor:</span>
+          <select class="select" id="vendor-select"></select>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="monthly-chart"></canvas>
+      </div>
+      <div class="info-box">Showing completed months only (Jan - Nov). December excluded until month close.</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-label">YTD Total</div><div class="stat-value" id="stat-ytd">--</div></div>
+        <div class="stat-box"><div class="stat-label">Monthly Avg</div><div class="stat-value" id="stat-monthly-avg">--</div></div>
+        <div class="stat-box"><div class="stat-label">Peak Month</div><div class="stat-value" id="stat-peak-month">--</div></div>
+        <div class="stat-box"><div class="stat-label">Peak Volume</div><div class="stat-value" id="stat-peak-vol">--</div></div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-alerts">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span class="panel-title-icon" style="background: #f59e0b;"></span>
+          Volume Alerts - November vs October
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div id="alerts-count-label" style="font-size: 11px; color: #64748b;">0 vendors flagged</div>
+          <button class="tab" id="export-alerts-btn" style="padding: 6px 14px; font-size: 10px;">Export CSV</button>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Vendor</th>
+            <th class="right">October</th>
+            <th class="right">November</th>
+            <th class="right">% of Prior</th>
+            <th class="right">Status</th>
+          </tr>
+        </thead>
+        <tbody id="alerts-table"></tbody>
+      </table>
+      <div class="alert-box">
+        <span class="alert-box-icon">&#9888;</span>
+        <div>
+          <strong>Action Required:</strong> Investigate vendors with unusual volume changes. Drops may indicate: contract ended, billing address changed, invoices routing to wrong location. Spikes may indicate: duplicate invoices, billing errors.
+        </div>
+      </div>
+      <div class="info-box">Alerts trigger for vendors with &ge;10 prior invoices showing &lt;75% or &gt;125% of prior month volume.</div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    // GLOBAL STATE
+    // ============================================================
+    var dailyDataAll = [];
+    var dailyData = [];
+    var monthlyData = {};
+    var alertsData = [];
+    var availableMonths = [];
+    var dailyChart = null;
+    var monthlyChart = null;
+
+    // ============================================================
+    // CSV PARSING
+    // ============================================================
+    function parseCSV(text) {
+      var lines = text.trim().split('\n');
+      var headers = lines[0].split(',');
+      var rows = [];
+      for (var i = 1; i < lines.length; i++) {
+        var values = lines[i].split(',');
+        var row = {};
+        for (var j = 0; j < headers.length; j++) {
+          row[headers[j].trim()] = values[j] ? values[j].trim() : '';
+        }
+        rows.push(row);
+      }
+      return rows;
+    }
+
+    // ============================================================
+    // DATA LOADING
+    // ============================================================
+    function loadAllData() {
+      Promise.all([
+        fetch('daily_mtd.csv').then(r => r.text()),
+        fetch('monthly_trend.csv').then(r => r.text()),
+        fetch('alerts.csv').then(r => r.text())
+      ]).then(function(results) {
+        // Parse daily data
+        var dailyRows = parseCSV(results[0]);
+        dailyDataAll = dailyRows.map(function(r) {
+          return {
+            month: r.month,
+            day: r.day,
+            count: parseInt(r.count) || 0,
+            isWeekend: r.isWeekend === 'true'
+          };
+        });
+        
+        // Remove the most recent day (current day - show day -1 as most recent)
+        if (dailyDataAll.length > 0) {
+          dailyDataAll.pop();
+        }
+        
+        // Get available months
+        var monthOrder = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var monthsInData = [...new Set(dailyDataAll.map(d => d.month))];
+        availableMonths = monthOrder.filter(m => monthsInData.includes(m));
+
+        // Parse monthly data
+        var monthlyRows = parseCSV(results[1]);
+        monthlyData = {};
+        
+        // Get current month to exclude
+        var currentMonth = monthOrder[new Date().getMonth()];
+        
+        monthlyRows.forEach(function(r) {
+          // Skip current month
+          if (r.month === currentMonth) return;
+          
+          var vendor = r.vendor;
+          if (!monthlyData[vendor]) monthlyData[vendor] = [];
+          monthlyData[vendor].push({
+            month: r.month,
+            count: parseInt(r.count) || 0
+          });
+        });
+
+        // Parse alerts data
+        var alertRows = parseCSV(results[2]);
+        alertsData = alertRows.map(function(r) {
+          return {
+            vendor: r.vendor,
+            priorCount: parseInt(r.priorCount) || 0,
+            currentCount: parseInt(r.currentCount) || 0,
+            pct: parseFloat(r.pct) || 0
+          };
+        }).filter(function(r) {
+          return r.vendor !== 'Unmatched' && r.priorCount >= 10 && (r.pct < 75 || r.pct > 125);
+        });
+
+        // Initialize UI
+        populateMonthDropdown();
+        populateVendorDropdown();
+        updateKPIs();
+        renderDailyChart();
+        renderMonthlyChart('All Vendors');
+        renderAlerts();
+      }).catch(function(err) {
+        console.error('Error loading CSV files:', err);
+        alert('Error loading data files. Make sure daily_mtd.csv, monthly_trend.csv, and alerts.csv are in the same folder.');
+      });
+    }
+
+    // ============================================================
+    // DROPDOWNS
+    // ============================================================
+    function populateMonthDropdown() {
+      var select = document.getElementById('month-select');
+      select.innerHTML = '';
+      availableMonths.slice().reverse().forEach(function(month, idx) {
+        var opt = document.createElement('option');
+        opt.value = month;
+        opt.textContent = month + ' 2025';
+        if (idx === 0) opt.selected = true;
+        select.appendChild(opt);
+      });
+      filterDailyData(select.value);
+    }
+
+    function populateVendorDropdown() {
+      var select = document.getElementById('vendor-select');
+      select.innerHTML = '';
+      
+      var vendorTotals = [];
+      Object.keys(monthlyData).forEach(function(vendor) {
+        if (vendor !== 'All Vendors' && vendor !== 'Unmatched') {
+          var total = monthlyData[vendor].reduce(function(s, d) { return s + d.count; }, 0);
+          vendorTotals.push({ vendor: vendor, total: total });
+        }
+      });
+      vendorTotals.sort(function(a, b) { return b.total - a.total; });
+      
+      // Limit to top 20
+      var top20 = vendorTotals.slice(0, 20);
+      
+      var allOpt = document.createElement('option');
+      allOpt.value = 'All Vendors';
+      allOpt.textContent = 'All Vendors';
+      select.appendChild(allOpt);
+      
+      var sep = document.createElement('option');
+      sep.disabled = true;
+      sep.textContent = '-- Top 20 by Volume --';
+      select.appendChild(sep);
+      
+      top20.forEach(function(v) {
+        var opt = document.createElement('option');
+        opt.value = v.vendor;
+        opt.textContent = v.vendor;
+        select.appendChild(opt);
+      });
+    }
+
+    function filterDailyData(month) {
+      dailyData = dailyDataAll.filter(d => d.month === month);
+    }
+
+    // ============================================================
+    // KPI UPDATES
+    // ============================================================
+    function updateKPIs() {
+      var currentMonth = document.getElementById('month-select').value;
+      var currentMonthData = dailyDataAll.filter(d => d.month === currentMonth);
+      
+      // Yesterday card always shows most recent day from ALL data (not filtered)
+      if (dailyDataAll.length > 0) {
+        var mostRecentDay = dailyDataAll[dailyDataAll.length - 1];
+        document.getElementById('kpi-yesterday').textContent = mostRecentDay.count.toLocaleString();
+        document.getElementById('kpi-yesterday-date').textContent = mostRecentDay.day;
+        document.getElementById('data-date').textContent = mostRecentDay.day + '/2025';
+      }
+
+      var mtdTotal = currentMonthData.reduce(function(s, d) { return s + d.count; }, 0);
+      document.getElementById('kpi-mtd').textContent = mtdTotal.toLocaleString();
+      document.getElementById('kpi-mtd-days').textContent = currentMonthData.length + ' days';
+      document.getElementById('kpi-mtd-label').textContent = currentMonth + ' MTD';
+
+      var ytdTotal = 0;
+      if (monthlyData['All Vendors']) {
+        ytdTotal = monthlyData['All Vendors'].reduce(function(s, d) { return s + d.count; }, 0);
+      }
+      document.getElementById('kpi-ytd').textContent = ytdTotal.toLocaleString();
+
+      document.getElementById('kpi-alerts').textContent = alertsData.length;
+      document.getElementById('tab-alerts').textContent = 'Alerts (' + alertsData.length + ')';
+      document.getElementById('alerts-count-label').textContent = alertsData.length + ' vendors flagged';
+    }
+
+    // ============================================================
+    // DAILY CHART (Chart.js)
+    // ============================================================
+    function renderDailyChart() {
+      var ctx = document.getElementById('daily-chart').getContext('2d');
+      
+      if (dailyChart) dailyChart.destroy();
+
+      if (!dailyData.length) {
+        ctx.font = '14px Segoe UI';
+        ctx.fillStyle = '#64748b';
+        ctx.textAlign = 'center';
+        ctx.fillText('No data for selected month', ctx.canvas.width / 2, ctx.canvas.height / 2);
+        return;
+      }
+
+      var labels = dailyData.map(d => d.day);
+      var counts = dailyData.map(d => d.count);
+      var backgroundColors = dailyData.map(d => d.isWeekend ? 'rgba(74, 155, 82, 0.4)' : 'rgba(74, 155, 82, 1)');
+      
+      var mtdTotal = counts.reduce((s, c) => s + c, 0);
+      var peakIdx = counts.indexOf(Math.max(...counts));
+      
+      // Calculate YTD daily average (from all data, not just current month)
+      var ytdTotal = dailyDataAll.reduce((s, d) => s + d.count, 0);
+      var ytdDailyAvg = Math.round(ytdTotal / dailyDataAll.length);
+
+      // Update stats
+      document.getElementById('daily-avg-label').textContent = 'YTD Avg ' + ytdDailyAvg + '/day';
+      document.getElementById('stat-mtd-total').textContent = mtdTotal.toLocaleString();
+      document.getElementById('stat-daily-avg').textContent = ytdDailyAvg.toLocaleString();
+      document.getElementById('stat-peak-day').textContent = labels[peakIdx];
+      document.getElementById('stat-peak-volume').textContent = Math.max(...counts).toLocaleString();
+
+      dailyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: counts,
+            backgroundColor: backgroundColors,
+            borderRadius: 4,
+            borderSkipped: false,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#1e2433',
+              titleColor: '#e2e8f0',
+              bodyColor: '#e2e8f0',
+              borderColor: '#2d3748',
+              borderWidth: 1,
+              padding: 12,
+              displayColors: false,
+              callbacks: {
+                label: function(ctx) {
+                  return ctx.parsed.y.toLocaleString() + ' invoices';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#64748b', font: { size: 10 } }
+            },
+            y: {
+              grid: { color: '#2d3748', drawBorder: false },
+              ticks: { color: '#64748b', font: { size: 10 } },
+              beginAtZero: true
+            }
+          }
+        },
+        plugins: [{
+          id: 'avgLine',
+          afterDraw: function(chart) {
+            var yAxis = chart.scales.y;
+            var ctx = chart.ctx;
+            var y = yAxis.getPixelForValue(ytdDailyAvg);
+            ctx.save();
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 4]);
+            ctx.beginPath();
+            ctx.moveTo(chart.chartArea.left, y);
+            ctx.lineTo(chart.chartArea.right, y);
+            ctx.stroke();
+            ctx.restore();
+          }
+        }]
+      });
+    }
+
+    // ============================================================
+    // MONTHLY CHART (Chart.js)
+    // ============================================================
+    function renderMonthlyChart(vendor) {
+      var ctx = document.getElementById('monthly-chart').getContext('2d');
+      var data = monthlyData[vendor] || [];
+      
+      if (monthlyChart) monthlyChart.destroy();
+
+      if (!data.length) {
+        ctx.font = '14px Segoe UI';
+        ctx.fillStyle = '#64748b';
+        ctx.textAlign = 'center';
+        ctx.fillText('No data for selected vendor', ctx.canvas.width / 2, ctx.canvas.height / 2);
+        return;
+      }
+
+      var labels = data.map(d => d.month);
+      var counts = data.map(d => d.count);
+      
+      var ytdTotal = counts.reduce((s, c) => s + c, 0);
+      var monthlyAvg = Math.round(ytdTotal / counts.length);
+      var peakIdx = counts.indexOf(Math.max(...counts));
+
+      // Update stats
+      document.getElementById('stat-ytd').textContent = ytdTotal.toLocaleString();
+      document.getElementById('stat-monthly-avg').textContent = monthlyAvg.toLocaleString();
+      document.getElementById('stat-peak-month').textContent = labels[peakIdx];
+      document.getElementById('stat-peak-vol').textContent = Math.max(...counts).toLocaleString();
+
+      monthlyChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: counts,
+            borderColor: '#4A9B52',
+            backgroundColor: 'rgba(74, 155, 82, 0.1)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#4A9B52',
+            pointBorderColor: '#1e2433',
+            pointBorderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            tension: 0.3,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#1e2433',
+              titleColor: '#e2e8f0',
+              bodyColor: '#e2e8f0',
+              borderColor: '#2d3748',
+              borderWidth: 1,
+              padding: 12,
+              displayColors: false,
+              callbacks: {
+                label: function(ctx) {
+                  return ctx.parsed.y.toLocaleString() + ' invoices';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: '#2d3748', drawBorder: false },
+              ticks: { color: '#64748b', font: { size: 10 } }
+            },
+            y: {
+              grid: { color: '#2d3748', drawBorder: false },
+              ticks: { 
+                color: '#64748b', 
+                font: { size: 10 },
+                callback: function(value) {
+                  return value >= 1000 ? (value / 1000) + 'k' : value;
+                }
+              },
+              beginAtZero: false
+            }
+          }
+        }
+      });
+    }
+
+    // ============================================================
+    // ALERTS TABLE
+    // ============================================================
+    function renderAlerts() {
+      var tbody = document.getElementById('alerts-table');
+      var html = '';
+      
+      if (alertsData.length === 0) {
+        html = '<tr><td colspan="5" style="text-align: center; padding: 40px; color: #64748b;"><div style="font-size: 32px; margin-bottom: 12px;">âœ“</div>No vendors flagged</td></tr>';
+      } else {
+        alertsData.forEach(function(r) {
+          var isSpike = r.pct > 100;
+          var change = isSpike ? (r.pct - 100).toFixed(0) : (100 - r.pct).toFixed(0);
+          var badgeClass = isSpike ? 'badge badge-green' : 'badge badge-red';
+          var arrow = isSpike ? '&#8593;' : '&#8595;';
+          var label = isSpike ? 'spike' : 'drop';
+          var cellClass = isSpike ? 'green' : 'red';
+          
+          html += '<tr>';
+          html += '<td>' + r.vendor + '</td>';
+          html += '<td class="right muted">' + r.priorCount.toLocaleString() + '</td>';
+          html += '<td class="right ' + cellClass + '">' + r.currentCount.toLocaleString() + '</td>';
+          html += '<td class="right ' + cellClass + '">' + r.pct.toFixed(1) + '%</td>';
+          html += '<td class="right"><span class="' + badgeClass + '">' + arrow + ' ' + change + '% ' + label + '</span></td>';
+          html += '</tr>';
+        });
+      }
+      tbody.innerHTML = html;
+    }
+
+    // ============================================================
+    // EVENT LISTENERS
+    // ============================================================
+    document.querySelectorAll('.tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    document.getElementById('vendor-select').addEventListener('change', function() {
+      renderMonthlyChart(this.value);
+    });
+
+    document.getElementById('month-select').addEventListener('change', function() {
+      filterDailyData(this.value);
+      updateKPIs();
+      renderDailyChart();
+    });
+
+    document.getElementById('export-alerts-btn').addEventListener('click', function() {
+      if (alertsData.length === 0) {
+        alert('No alerts to export');
+        return;
+      }
+      var csv = 'vendor,priorCount,currentCount,pct,status\n';
+      alertsData.forEach(function(r) {
+        var status = r.pct > 100 ? 'spike' : 'drop';
+        csv += '"' + r.vendor.replace(/"/g, '""') + '",' + r.priorCount + ',' + r.currentCount + ',' + r.pct.toFixed(1) + ',' + status + '\n';
+      });
+      var blob = new Blob([csv], { type: 'text/csv' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'alerts_export.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    window.addEventListener('resize', function() {
+      if (dailyChart) dailyChart.resize();
+      if (monthlyChart) monthlyChart.resize();
+    });
+
+    // ============================================================
+    // INIT
+    // ============================================================
+    loadAllData();
+  </script>
+</body>
+</html>

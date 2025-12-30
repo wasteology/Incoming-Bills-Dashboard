@@ -1,0 +1,313 @@
+vendor_name,reason,invoice_count
+LRS,too_short (3 chars),106
+casella CASELLA MAJOR ACCOUNTS SERVICES LLC,starts_lowercase (OCR truncation),94
+casella\nCASELLA MAJOR ACCOUNTS SERVICES LLC,starts_lowercase (OCR truncation),65
+"ash Franchise Partners, LLC",starts_lowercase (OCR truncation),61
+environmental services,starts_lowercase (OCR truncation),55
+CR&,too_short (3 chars),45
+CR&R,too_short (4 chars),44
+of Talking Trash,starts_lowercase (OCR truncation),44
+FCC,too_short (3 chars),43
+?????,too_few_letters (0),39
+"kmG HAULING, INC",starts_lowercase (OCR truncation),38
+GF,too_short (2 chars),30
+FCC®,too_short (4 chars),28
+CWD,too_short (3 chars),19
+g2 revolution,starts_lowercase (OCR truncation),18
+ecosouth,starts_lowercase (OCR truncation),17
+GHW,too_short (3 chars),17
+rbside Roll Off Inc,starts_lowercase (OCR truncation),16
+PETE,too_short (4 chars),14
+ABC,too_short (3 chars),13
+curbside,starts_lowercase (OCR truncation),11
+CRSR,too_short (4 chars),10
+BIGS,too_short (4 chars),10
+CSD,too_short (3 chars),10
+ZARC,too_short (4 chars),10
+"or Rentals, LLC",starts_lowercase (OCR truncation),9
+"g2 Revolution, LLC",starts_lowercase (OCR truncation),9
+harvey,starts_lowercase (OCR truncation),9
+HMP,too_short (3 chars),9
+LLC,too_short (3 chars),9
+Rec,too_short (3 chars),9
+UPS,too_short (3 chars),9
+C&D,too_short (3 chars),8
+LWPM,too_short (4 chars),8
+VLS,too_short (3 chars),8
+CWPM,too_short (4 chars),8
+C & D,too_few_letters (2),7
+Apex,too_short (4 chars),7
+WM,too_short (2 chars),7
+CWS,too_short (3 chars),6
+save THAT Stuff,starts_lowercase (OCR truncation),6
+RDT,too_short (3 chars),6
+cityofblackfoot.org,starts_lowercase (OCR truncation),6
+APEX,too_short (4 chars),6
+Zarc,too_short (4 chars),6
+DP,too_short (2 chars),6
+AMG,too_short (3 chars),6
+waste & recycling,starts_lowercase (OCR truncation),5
+side Roll Off Inc,starts_lowercase (OCR truncation),5
+posal Inc.,starts_lowercase (OCR truncation),5
+EDCO,too_short (4 chars),5
+ho Falls,starts_lowercase (OCR truncation),5
+L&L,too_short (3 chars),5
+Mesa,too_short (4 chars),5
+HBS,too_short (3 chars),5
+g revolution,starts_lowercase (OCR truncation),5
+caro & Sons,starts_lowercase (OCR truncation),5
+J&K,too_short (3 chars),5
+LUSK,too_short (4 chars),5
+mesa.az,starts_lowercase (OCR truncation),4
+CWRR,too_short (4 chars),4
+sa Disposal Corp,starts_lowercase (OCR truncation),4
+CIS,too_short (3 chars),4
+"mond Disposal, Inc",starts_lowercase (OCR truncation),4
+Inc,too_short (3 chars),4
+lee mechanical contractors,starts_lowercase (OCR truncation),4
+SCS,too_short (3 chars),4
+FCS,too_short (3 chars),3
+"g, LLC",starts_lowercase (OCR truncation),3
+Best,too_short (4 chars),3
+NASA,too_short (4 chars),3
+STR,too_short (3 chars),3
+MT,too_short (2 chars),3
+AAA,too_short (3 chars),3
+DTG,too_short (3 chars),3
+"merican Waste Control, Inc.",starts_lowercase (OCR truncation),3
+GFI,too_short (3 chars),3
+PCC®,too_short (4 chars),3
+.L.C.,too_few_letters (2),3
+posal Corp,starts_lowercase (OCR truncation),3
+casell,starts_lowercase (OCR truncation),3
+sella,starts_lowercase (OCR truncation),3
+DTS,too_short (3 chars),3
+BLOE,too_short (4 chars),3
+IROW,too_short (4 chars),3
+ADSI,too_short (4 chars),2
+ecosouth services,starts_lowercase (OCR truncation),2
+TK,too_short (2 chars),2
+"eworld Indianapolis, Inc.",starts_lowercase (OCR truncation),2
+OCAL,too_short (4 chars),2
+SAGE,too_short (4 chars),2
+E.,too_short (2 chars),2
+"merican\nWaste Control, Inc.",starts_lowercase (OCR truncation),2
+western elite,starts_lowercase (OCR truncation),2
+able Sanitation Inc,starts_lowercase (OCR truncation),2
+T & G,too_few_letters (2),2
+C.,too_short (2 chars),2
+PDS,too_short (3 chars),2
+GSS,too_short (3 chars),2
+P,too_short (1 chars),2
+ups,too_short (3 chars),2
+absolute services junk it store it recycle it,starts_lowercase (OCR truncation),2
+absolute services\njunk it store it recycle it,starts_lowercase (OCR truncation),2
+AWS,too_short (3 chars),2
+greenwaste™,starts_lowercase (OCR truncation),2
+awrence,starts_lowercase (OCR truncation),2
+city of Oakland Park,starts_lowercase (OCR truncation),2
+"g2 revolution, LLC",starts_lowercase (OCR truncation),2
+L.C.,too_short (4 chars),2
+"lu Disposal Service, Inc.",starts_lowercase (OCR truncation),2
+commercial industrial residential,starts_lowercase (OCR truncation),2
+Akat,too_short (4 chars),2
+redbox+ Dumpsters of Kansas City,starts_lowercase (OCR truncation),2
+J&T,too_short (3 chars),2
+DDS,too_short (3 chars),2
+J & T,too_few_letters (2),2
+"cycling Equipment, Inc.",starts_lowercase (OCR truncation),2
+"alandro's Refuse, Inc.",starts_lowercase (OCR truncation),2
+NRH,too_short (3 chars),2
+CRP,too_short (3 chars),1
+marion County Solid Waste,starts_lowercase (OCR truncation),1
+cosouth,starts_lowercase (OCR truncation),1
+a Compost LLC,starts_lowercase (OCR truncation),1
+itary & Columbia Potties,starts_lowercase (OCR truncation),1
+itary &\nColumbia Potties,starts_lowercase (OCR truncation),1
+var Equipment Solutions,starts_lowercase (OCR truncation),1
+alco,too_short (4 chars),1
+"world Indianapolis, Inc.",starts_lowercase (OCR truncation),1
+STRR,too_short (4 chars),1
+Gmen,too_short (4 chars),1
+black hawk Waste Disposal,starts_lowercase (OCR truncation),1
+Shre,too_short (4 chars),1
+E.L.,too_short (4 chars),1
+harvey\nWaste & Recycling,starts_lowercase (OCR truncation),1
+JWR,too_short (3 chars),1
+SPC,too_short (3 chars),1
+zollett,starts_lowercase (OCR truncation),1
+posal Services,starts_lowercase (OCR truncation),1
+cycling & Disposal Services,starts_lowercase (OCR truncation),1
+CRTS,too_short (4 chars),1
+h Service,starts_lowercase (OCR truncation),1
+EXXE,too_short (4 chars),1
+cology King County,starts_lowercase (OCR truncation),1
+cology King County WASTE,starts_lowercase (OCR truncation),1
+Rich,too_short (4 chars),1
+INC.,too_short (4 chars),1
+CITY,too_short (4 chars),1
+OUNT,too_short (4 chars),1
+RTS,too_short (3 chars),1
+dale ARIZONA,starts_lowercase (OCR truncation),1
+lendale,starts_lowercase (OCR truncation),1
+posal LLC,starts_lowercase (OCR truncation),1
+RAD,too_short (3 chars),1
+cling & Disposal Services,starts_lowercase (OCR truncation),1
+CR,too_short (2 chars),1
+disposal,starts_lowercase (OCR truncation),1
+ED'S,too_short (4 chars),1
+COX,too_short (3 chars),1
+wm,too_short (2 chars),1
+000,too_short (3 chars),1
+cityofbla,starts_lowercase (OCR truncation),1
+KIRK,too_short (4 chars),1
+WASH,too_short (4 chars),1
+GLF,too_short (3 chars),1
+HPM,too_short (3 chars),1
+of Apple Valley,starts_lowercase (OCR truncation),1
+AB 1826,too_few_letters (2),1
+scher Disposal INC.,starts_lowercase (OCR truncation),1
+CRS,too_short (3 chars),1
+of Jacksonville,starts_lowercase (OCR truncation),1
+onville,starts_lowercase (OCR truncation),1
+"itary Service, Inc.",starts_lowercase (OCR truncation),1
+"lters Sanitary Service, Inc.",starts_lowercase (OCR truncation),1
+Id,too_short (2 chars),1
+kootenai couty solid waste department,starts_lowercase (OCR truncation),1
+ER,too_short (2 chars),1
+DUE,too_short (3 chars),1
+"co Sanitary Service, Inc.",starts_lowercase (OCR truncation),1
+GGG,too_short (3 chars),1
+HGd,too_short (3 chars),1
+MSS,too_short (3 chars),1
+cology Western Oregon WASTE,starts_lowercase (OCR truncation),1
+D E,too_short (3 chars),1
+blo Resource Recovery,starts_lowercase (OCR truncation),1
+anton Garbage Service Inc.,starts_lowercase (OCR truncation),1
+"anton Garbage Service, Inc.",starts_lowercase (OCR truncation),1
+GS,too_short (2 chars),1
+n Garbage Service Inc.,starts_lowercase (OCR truncation),1
+MI.,too_short (3 chars),1
+DALY,too_short (4 chars),1
+"c/o Burrtec Waste Industries, Inc.",starts_lowercase (OCR truncation),1
+AKAT,too_short (4 chars),1
+"sh, LLC.",starts_lowercase (OCR truncation),1
+intuit ab quickbooks,starts_lowercase (OCR truncation),1
+SVC.,too_short (4 chars),1
+Dog.,too_short (4 chars),1
+land ervices,starts_lowercase (OCR truncation),1
+DTC,too_short (3 chars),1
+Reco,too_short (4 chars),1
+4F,too_short (2 chars),1
+BCC,too_short (3 chars),1
+MITH,too_short (4 chars),1
+I.DE,too_short (4 chars),1
+curbside Minne,starts_lowercase (OCR truncation),1
+hens Services,starts_lowercase (OCR truncation),1
+WARS,too_short (4 chars),1
+Mt.,too_short (3 chars),1
+R,too_short (1 chars),1
+waste.,starts_lowercase (OCR truncation),1
+ACI,too_short (3 chars),1
+borg Industries,starts_lowercase (OCR truncation),1
+WAND,too_short (4 chars),1
+Comp,too_short (4 chars),1
+C&C,too_short (3 chars),1
+"a division of Hometown Waste, LLC",starts_lowercase (OCR truncation),1
+nlr,too_short (3 chars),1
+WPM,too_short (3 chars),1
+quality waste,starts_lowercase (OCR truncation),1
+GÃO,too_short (3 chars),1
+CRI,too_short (3 chars),1
+JUNK,too_short (4 chars),1
+ity of Lakeland,starts_lowercase (OCR truncation),1
+CF,too_short (2 chars),1
+bravanere,starts_lowercase (OCR truncation),1
+of OAKLAND,starts_lowercase (OCR truncation),1
+of OAKLA CITY AND,starts_lowercase (OCR truncation),1
+MGS,too_short (3 chars),1
+COAS,too_short (4 chars),1
+ty Boyz Waste Solutions,starts_lowercase (OCR truncation),1
+G2,too_short (2 chars),1
+Dek,too_short (3 chars),1
+C &,too_short (3 chars),1
+"posal Service, Inc.",starts_lowercase (OCR truncation),1
+island RECYCLING,starts_lowercase (OCR truncation),1
+working for resource conservation & recycling,starts_lowercase (OCR truncation),1
+d'Alene,starts_lowercase (OCR truncation),1
+eur d'Alene GAR,starts_lowercase (OCR truncation),1
+BKI,too_short (3 chars),1
+g Services Inc,starts_lowercase (OCR truncation),1
+Omni,too_short (4 chars),1
+Blus,too_short (4 chars),1
+PYY,too_short (3 chars),1
+c.,too_short (2 chars),1
+rumpke,starts_lowercase (OCR truncation),1
+"waste connections PENN WASTE, INC",starts_lowercase (OCR truncation),1
+arc,too_short (3 chars),1
+GP21,too_short (4 chars),1
+tal Servis,starts_lowercase (OCR truncation),1
+CD,too_short (2 chars),1
+baldwincountyswda.org/recycling,starts_lowercase (OCR truncation),1
+cas sella CASELLA MAJOR ACCOUNTS SERVICES LLC,starts_lowercase (OCR truncation),1
+"ivan & Co., Inc.",starts_lowercase (OCR truncation),1
+asella,starts_lowercase (OCR truncation),1
+vossa Disposal Corp,starts_lowercase (OCR truncation),1
+land Transaction Receipt,starts_lowercase (OCR truncation),1
+est. '99,starts_lowercase (OCR truncation),1
+asella CASELLA MAJOR ACCOUNTS SERVICES LLC,starts_lowercase (OCR truncation),1
+h Emeryville CA 94608 United States,starts_lowercase (OCR truncation),1
+ULS,too_short (3 chars),1
+of Kansas City,starts_lowercase (OCR truncation),1
+RES,too_short (3 chars),1
+BCS,too_short (3 chars),1
+devils lake,starts_lowercase (OCR truncation),1
+Recy,too_short (4 chars),1
+case ell,starts_lowercase (OCR truncation),1
+herican Recycling Services,starts_lowercase (OCR truncation),1
+confab,starts_lowercase (OCR truncation),1
+becker360,starts_lowercase (OCR truncation),1
+DDI,too_short (3 chars),1
+ABKI,too_short (4 chars),1
+WDS,too_short (3 chars),1
+Cas,too_short (3 chars),1
+asella\nCASELLA MAJOR ACCOUNTS SERVICES LLC,starts_lowercase (OCR truncation),1
+sella CASELLA MAJOR ACCOUNTS SERVICES LLC,starts_lowercase (OCR truncation),1
+have tow,starts_lowercase (OCR truncation),1
+have ton,starts_lowercase (OCR truncation),1
+ACY,too_short (3 chars),1
+Haul,too_short (4 chars),1
+Hawl,too_short (4 chars),1
+mid. Hs,starts_lowercase (OCR truncation),1
+curbside Roll Off,starts_lowercase (OCR truncation),1
+Be,too_short (2 chars),1
+G100,too_short (4 chars),1
+waste..,starts_lowercase (OCR truncation),1
+TEG,too_short (3 chars),1
+RAHN,too_short (4 chars),1
+AUP,too_short (3 chars),1
+Haux,too_short (4 chars),1
+Rahn,too_short (4 chars),1
+rence County Solid Waste,starts_lowercase (OCR truncation),1
+ste Services,starts_lowercase (OCR truncation),1
+valeri,starts_lowercase (OCR truncation),1
+BAGE,too_short (4 chars),1
+"posal, LLC",starts_lowercase (OCR truncation),1
+nk Removal LLC,starts_lowercase (OCR truncation),1
+SRG,too_short (3 chars),1
+cAllen Public Utility,starts_lowercase (OCR truncation),1
+CRR,too_short (3 chars),1
+TP,too_short (2 chars),1
+CWSI,too_short (4 chars),1
+WFT,too_short (3 chars),1
+evens Disposal & Recycling Service Inc.,starts_lowercase (OCR truncation),1
+Inc.,too_short (4 chars),1
+DFW,too_short (3 chars),1
+EPER,too_short (4 chars),1
+OKON,too_short (4 chars),1
+Anco,too_short (4 chars),1
+psters of North Northeast Houston,starts_lowercase (OCR truncation),1
+redbox+ Dumpsters of North Northeast Houston,starts_lowercase (OCR truncation),1
+rum,too_short (3 chars),1
+westside Waste Management,starts_lowercase (OCR truncation),1
+CTL,too_short (3 chars),1
