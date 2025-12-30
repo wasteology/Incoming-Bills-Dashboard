@@ -1,6 +1,7 @@
 # Invoice Volume Dashboard
 ## Summary Overview 
-## https://shane-wasteology.github.io/incoming-bills-dashboard/
+## URL: https://shane-wasteology.github.io/incoming-bills-dashboard/
+### Refer to technical_readme for dailiy pipeline instructions
 ---
 
 ### Purpose
